@@ -1,0 +1,13 @@
+["0.0.0"]
+origin = "file://.."
+["0.0.0".depends-on]
+utilada_curl = "*"
+[general]
+description = "Shiny new project"
+maintainers = [
+"your@email.here",
+]
+maintainers-logins = [
+"github-username",
+]
+

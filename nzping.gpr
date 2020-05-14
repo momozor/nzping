@@ -1,0 +1,26 @@
+with "utilada_curl";
+with "utilada_base";
+with "utilada_core";
+with "utilada_http";
+project Nzping is
+
+   for Source_Dirs use ("src");
+   for Object_Dir use "obj";
+   for Exec_Dir use "bin";
+   for Main use ("nzping.adb");
+
+   package Builder is
+      for Switches ("ada") use ("-j0", "-g");
+   end Builder;
+
+   package Compiler is
+      for Switches ("ada") use
+        ("-gnatVa", "-gnatwa", "-g", "-O2",
+         "-gnata", "-gnato", "-fstack-check");
+   end Compiler;
+
+   package Binder is
+      for Switches ("ada") use ("-Es");
+   end Binder;
+
+end Nzping;
