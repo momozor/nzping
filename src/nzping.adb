@@ -22,8 +22,13 @@ begin
          URI      : constant String := Ada.Command_Line.Argument (I);
          Response : Util.Http.Clients.Response;
       begin
-         Http.Get (URI, Response);
-         Ada.Text_IO.Put_Line ("|Status Code: " & Natural'Image (Response.Get_Status) & "|" & URI & "                            |");
+         begin
+            Http.Get (URI, Response);
+            Ada.Text_IO.Put_Line ("|Status Code: " & Natural'Image (Response.Get_Status) & "|" & URI & "                            |");
+         exception
+            when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR  =>
+               Ada.Text_IO.Put_Line("Host not found!");
+         end;
       end;
    end loop;
    
