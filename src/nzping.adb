@@ -4,19 +4,23 @@ with Util.Http.Clients;
 with Util.Http.Clients.Curl;
 
 procedure Nzping is
+   package Text_IO renames Ada.Text_IO;
    TOTAL_SCREEN_WIDTH : constant Integer := 80;
    Total_Arguments_Count : constant Natural := Ada.Command_Line.Argument_Count;
 begin
    if Total_Arguments_Count = 0 then
-      Ada.Text_IO.Put_Line ("Usage: nzping url ...");
-      Ada.Text_IO.Put_Line ("Example: nzping https://twitter.com");
+      Text_IO.Put_Line ("Usage: nzping url ...");
+      Text_IO.Put_Line ("Example: nzping https://twitter.com");
       return;
    end if;
    
    Util.Http.Clients.Curl.Register;
    
+   for I in 1 .. TOTAL_SCREEN_WIDTH loop
+      Text_IO.Put ("-");
+   end loop;
+   
    while True loop
-      Ada.Text_IO.Put_Line ("-----------------------------------------------");
       for I in 1 .. Total_Arguments_Count loop
          declare
             Http     : Util.Http.Clients.Client;
@@ -25,16 +29,20 @@ begin
          begin
             begin
                Http.Get (URI, Response);
-               Ada.Text_IO.Put_Line ("|URI: " & URI & " | Status Code: " & Natural'Image (Response.Get_Status));
+               Text_IO.Put_Line ("URI: " & URI & " | Status Code: " & Natural'Image (Response.Get_Status));
             exception
                when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR  =>
-                  Ada.Text_IO.Put_Line ("Host " & URI & " not found!");
+                  Text_IO.Put_Line ("Host " & URI & " not found!");
+                  return;
+                  
             end;
          end;
       end loop;
-      Ada.Text_IO.Put_Line ("------------------------------------------------");
-      Ada.Text_IO.Put_Line ("");
-      Ada.Text_IO.Put_Line ("Checking for another 60 seconds..");
+      for I in 1 .. TOTAL_SCREEN_WIDTH loop
+         Text_IO.Put ("-");
+      end loop;
+      Text_IO.Put_Line ("");
+      Text_IO.Put_Line ("Checking for another 60 seconds..");
       delay Duration(60.0);
    end loop;
 end Nzping;
