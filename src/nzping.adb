@@ -42,7 +42,6 @@ begin
                      Status_Type := Unbounded.To_Unbounded_String("SUCCESS");
                   when others =>
                      Status_Type := Unbounded.To_Unbounded_String("ERROR");
-                     exit;
                end case;
                
                Text_IO.Put_Line ("URI: " 
