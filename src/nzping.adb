@@ -8,10 +8,17 @@ procedure Nzping is
    package Text_IO renames Ada.Text_IO;
    package Unbounded renames Ada.Strings.Unbounded;
    
-   TOTAL_SCREEN_WIDTH : constant Integer := 80;
+   procedure Print_Border_Lines (Lines_Length: in Integer) is
+   begin
+      for I in 1 .. Lines_Length loop
+         Text_IO.Put ("-");
+      end loop;
+   end Print_Border_Lines;
+   
+   DEFAULT_TOTAL_SCREEN_WIDTH : constant Integer := 80;
    Total_Arguments_Count : constant Natural := Ada.Command_Line.Argument_Count;
 begin
-   if Total_Arguments_Count = 0 then
+            if Total_Arguments_Count = 0 then
       Text_IO.Put_Line ("Usage: nzping url ...");
       Text_IO.Put_Line ("Example: nzping https://twitter.com");
       return;
@@ -19,11 +26,9 @@ begin
    
    Util.Http.Clients.Curl.Register;
    
-   for I in 1 .. TOTAL_SCREEN_WIDTH loop
-      Text_IO.Put ("-");
-   end loop;
-   
+   Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
    Text_IO.Put_Line("");
+   
    while True loop
       for I in 1 .. Total_Arguments_Count loop
          declare
@@ -49,22 +54,24 @@ begin
                                    & " | Status Type: " 
                                    & Unbounded.To_String(Status_Type)
                                    & " | Status Code: "
-                                   & Natural'Image(Status_Code));
+                                   & Natural'Image(Status_Code)
+                                );
             exception
                when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR  =>
                   Text_IO.Put_Line ("Host " & URI & " not found!");
-                  for I in 1 .. TOTAL_SCREEN_WIDTH loop
-                     Text_IO.Put ("-");
-                  end loop;
+                  
+                  Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
+                  
+                  Text_IO.Put("");
                   return;
                   
             end;
          end;
       end loop;
-      for I in 1 .. TOTAL_SCREEN_WIDTH loop
-         Text_IO.Put ("-");
-      end loop;
+      
+      Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
       Text_IO.Put_Line ("");
+      
       Text_IO.Put_Line ("Checking for another 60 seconds..");
       delay Duration(60.0);
    end loop;
