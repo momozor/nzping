@@ -54,6 +54,9 @@ begin
             exception
                when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR  =>
                   Text_IO.Put_Line ("Host " & URI & " not found!");
+                  for I in 1 .. TOTAL_SCREEN_WIDTH loop
+                     Text_IO.Put ("-");
+                  end loop;
                   return;
                   
             end;
