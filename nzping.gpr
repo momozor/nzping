@@ -2,6 +2,7 @@ with "utilada_curl";
 with "utilada_base";
 with "utilada_core";
 with "utilada_http";
+with "utilada_unit";
 project Nzping is
 
    for Source_Dirs use ("src");

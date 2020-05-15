@@ -1,5 +1,8 @@
 ["0.0.0"]
 origin = "file://.."
+["0.0.0".depends-on]
+utilada_curl = "*"
+utilada_unit = "*"
 [general]
 description = "Shiny new project"
 maintainers = [
