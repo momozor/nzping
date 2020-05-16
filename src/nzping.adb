@@ -30,7 +30,7 @@ begin
    Util.Http.Clients.Curl.Register;
    
    Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
-   Text_IO.Put_Line ("");
+   Text_IO.New_Line;
    
    Recheck_Interval_Seconds := Float'Value (Ada.Command_Line.Argument (1));
    
@@ -67,7 +67,7 @@ begin
                   
                   Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
                   
-                  Text_IO.Put ("");
+                  Text_IO.New_Line;
                   return;
                   
             end;
@@ -75,11 +75,13 @@ begin
       end loop;
       
       Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
-      Text_IO.Put_Line ("");
+      Text_IO.New_Line;
       
-      Text_IO.Put_Line ("Checking for another " 
-                          & Float'Image (Recheck_Interval_Seconds) 
-                          & " second(s)..");
+      Text_IO.Put ("Checking for another ");
+      Text_IO.Put (Float'Image (Recheck_Interval_Seconds));
+      Text_IO.Put (" second(s)..");
+      Text_IO.New_Line;
+      
       delay Duration (Recheck_Interval_Seconds);
    end loop;
 end Nzping;
