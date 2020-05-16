@@ -30,9 +30,9 @@ begin
    Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
    Text_IO.Put_Line ("");
    
-   while True loop
+   loop
       for I in 1 .. Total_Arguments_Count loop
-         declare
+      declare
             Http     : Util.Http.Clients.Client;
             URI      : constant String := Ada.Command_Line.Argument (I);
             Response : Util.Http.Clients.Response;
