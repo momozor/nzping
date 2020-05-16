@@ -2,7 +2,6 @@
 origin = "file://.."
 ["0.1.0".depends-on]
 utilada_curl = "*"
-utilada_unit = "*"
 [general]
 description = "A simple console program to auto ping server(s)"
 maintainers = [
