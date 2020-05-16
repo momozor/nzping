@@ -18,10 +18,12 @@ procedure Nzping is
    DEFAULT_TOTAL_SCREEN_WIDTH : constant Integer := 80;
    Total_Arguments_Count : constant Natural := 
      Ada.Command_Line.Argument_Count;
+   Recheck_Interval_Seconds : Float;
+   
 begin
-   if Total_Arguments_Count = 0 then
-      Text_IO.Put_Line ("Usage: nzping url ...");
-      Text_IO.Put_Line ("Example: ./nzping https://github.com");
+   if Total_Arguments_Count = 0 or Total_Arguments_Count = 1 then
+      Text_IO.Put_Line ("Usage: nzping interval_in_seconds url ...");
+      Text_IO.Put_Line ("Example: ./nzping 60.0 https://github.com");
       return;
    end if;
    
@@ -30,8 +32,10 @@ begin
    Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
    Text_IO.Put_Line ("");
    
+   Recheck_Interval_Seconds := Float'Value (Ada.Command_Line.Argument (1));
+   
    loop
-      for I in 1 .. Total_Arguments_Count loop
+      for I in 2 .. Total_Arguments_Count loop
          declare
             Http     : Util.Http.Clients.Client;
             URI      : constant String := Ada.Command_Line.Argument (I);
@@ -74,6 +78,6 @@ begin
       Text_IO.Put_Line ("");
       
       Text_IO.Put_Line ("Checking for another 60 seconds..");
-      delay Duration (60.0);
+      delay Duration (Recheck_Interval_Seconds);
    end loop;
 end Nzping;
