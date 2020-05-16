@@ -61,8 +61,7 @@ begin
                                    & " | Status Type: " 
                                    & Unbounded.To_String (Status_Type)
                                    & " | Status Code: "
-                                   & Natural'Image (Status_Code)
-                                );
+                                   & Natural'Image (Status_Code));
             exception
                when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR  =>
                   Text_IO.Put_Line ("Host " & URI & " not found!");
