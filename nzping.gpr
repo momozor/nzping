@@ -7,12 +7,12 @@ project Nzping is
    for Main use ("nzping.adb");
 
    package Builder is
-      for Switches ("ada") use ("-j0", "-g");
+      for Switches ("ada") use ("-j0");
    end Builder;
 
    package Compiler is
       for Switches ("ada") use
-        ("-gnatVa", "-gnatwa", "-g", "-O2",
+        ("-gnatVa", "-gnatwa", "-O2",
          "-gnata", "-gnato", "-fstack-check");
    end Compiler;
 
