@@ -1,4 +1,5 @@
 with Ada.Text_IO;
+with Ada.Float_Text_IO;
 with Ada.Command_Line;
 with Ada.Strings.Unbounded;
 with Util.Http.Clients;
@@ -6,6 +7,7 @@ with Util.Http.Clients.Curl;
 
 procedure Nzping is
    package Text_IO renames Ada.Text_IO;
+   package Float_Text_IO renames Ada.Float_Text_IO;
    package Unbounded renames Ada.Strings.Unbounded;
    
    procedure Print_Border_Lines (Lines_Length: in Integer) is
@@ -77,8 +79,11 @@ begin
       Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
       Text_IO.New_Line;
       
-      Text_IO.Put ("Checking for another ");
-      Text_IO.Put (Float'Image (Recheck_Interval_Seconds));
+      Text_IO.Put ("Checking for another");
+      Float_Text_IO.Put (Recheck_Interval_Seconds,
+                         Fore => 5,
+                         Aft => 2,
+                         Exp => 0);
       Text_IO.Put (" second(s)..");
       Text_IO.New_Line;
       
