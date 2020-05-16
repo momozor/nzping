@@ -2,6 +2,7 @@ with Ada.Text_IO;
 with Ada.Float_Text_IO;
 with Ada.Command_Line;
 with Ada.Strings.Unbounded;
+with Ada.Strings.Fixed;
 with Util.Http.Clients;
 with Util.Http.Clients.Curl;
 
@@ -9,6 +10,7 @@ procedure Nzping is
    package Text_IO renames Ada.Text_IO;
    package Float_Text_IO renames Ada.Float_Text_IO;
    package Unbounded renames Ada.Strings.Unbounded;
+   package Fixed renames Ada.Strings.Fixed;
    
    procedure Print_Border_Lines (Lines_Length: in Integer) is
    begin
@@ -29,12 +31,20 @@ begin
       return;
    end if;
    
+   begin
+      Recheck_Interval_Seconds := 
+        Float'Value (Ada.Command_Line.Argument (1));
+      
+   exception
+      when Error : CONSTRAINT_ERROR =>
+         Text_IO.Put_Line ("[ERROR] interval time must be in floating-point or integer!");
+         return;
+   end;
+   
    Util.Http.Clients.Curl.Register;
    
    Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
    Text_IO.New_Line;
-   
-   Recheck_Interval_Seconds := Float'Value (Ada.Command_Line.Argument (1));
    
    loop
       for I in 2 .. Total_Arguments_Count loop
@@ -45,8 +55,18 @@ begin
             Status_Code : Natural;
             Status_Type : Unbounded.Unbounded_String;
          begin
+            
             begin
-               Http.Get (URI, Response);
+               
+               if Fixed.Index (URI, "http") > 0
+                 or Fixed.Index (URI, "https") > 0 then
+                  
+                  Http.Get (URI, Response);
+               else
+                  Text_IO.Put_Line ("[ERROR] Link must start with http or https!!!");
+                  return;
+               end if;
+               
                Status_Code := Response.Get_Status;
                
                case Status_Code is
