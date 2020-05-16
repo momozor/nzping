@@ -19,7 +19,7 @@ procedure Nzping is
    Total_Arguments_Count : constant Natural := 
      Ada.Command_Line.Argument_Count;
 begin
-            if Total_Arguments_Count = 0 then
+   if Total_Arguments_Count = 0 then
       Text_IO.Put_Line ("Usage: nzping url ...");
       Text_IO.Put_Line ("Example: ./nzping https://github.com");
       return;
@@ -32,7 +32,7 @@ begin
    
    loop
       for I in 1 .. Total_Arguments_Count loop
-      declare
+         declare
             Http     : Util.Http.Clients.Client;
             URI      : constant String := Ada.Command_Line.Argument (I);
             Response : Util.Http.Clients.Response;
