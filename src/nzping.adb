@@ -77,7 +77,9 @@ begin
       Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
       Text_IO.Put_Line ("");
       
-      Text_IO.Put_Line ("Checking for another 60 seconds..");
+      Text_IO.Put_Line ("Checking for another " 
+                          & Float'Image (Recheck_Interval_Seconds) 
+                          & " second(s)..");
       delay Duration (Recheck_Interval_Seconds);
    end loop;
 end Nzping;
