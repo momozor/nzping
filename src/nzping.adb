@@ -16,18 +16,19 @@ procedure Nzping is
    end Print_Border_Lines;
    
    DEFAULT_TOTAL_SCREEN_WIDTH : constant Integer := 80;
-   Total_Arguments_Count : constant Natural := Ada.Command_Line.Argument_Count;
+   Total_Arguments_Count : constant Natural := 
+     Ada.Command_Line.Argument_Count;
 begin
             if Total_Arguments_Count = 0 then
       Text_IO.Put_Line ("Usage: nzping url ...");
-      Text_IO.Put_Line ("Example: nzping https://twitter.com");
+      Text_IO.Put_Line ("Example: ./nzping https://github.com");
       return;
    end if;
    
    Util.Http.Clients.Curl.Register;
    
    Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
-   Text_IO.Put_Line("");
+   Text_IO.Put_Line ("");
    
    while True loop
       for I in 1 .. Total_Arguments_Count loop
@@ -44,17 +45,17 @@ begin
                
                case Status_Code is
                   when 200 .. 399 =>
-                     Status_Type := Unbounded.To_Unbounded_String("SUCCESS");
+                     Status_Type := Unbounded.To_Unbounded_String ("SUCCESS");
                   when others =>
-                     Status_Type := Unbounded.To_Unbounded_String("ERROR");
+                     Status_Type := Unbounded.To_Unbounded_String ("ERROR");
                end case;
                
                Text_IO.Put_Line ("URI: " 
                                    & URI
                                    & " | Status Type: " 
-                                   & Unbounded.To_String(Status_Type)
+                                   & Unbounded.To_String (Status_Type)
                                    & " | Status Code: "
-                                   & Natural'Image(Status_Code)
+                                   & Natural'Image (Status_Code)
                                 );
             exception
                when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR  =>
@@ -62,7 +63,7 @@ begin
                   
                   Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
                   
-                  Text_IO.Put("");
+                  Text_IO.Put ("");
                   return;
                   
             end;
@@ -73,6 +74,6 @@ begin
       Text_IO.Put_Line ("");
       
       Text_IO.Put_Line ("Checking for another 60 seconds..");
-      delay Duration(60.0);
+      delay Duration (60.0);
    end loop;
 end Nzping;
