@@ -12,8 +12,10 @@ project Nzping is
 
    package Compiler is
       for Switches ("ada") use
-        ("-gnatVa", "-gnatwa", "-O2",
-         "-gnata", "-gnato", "-fstack-check");
+        ("-gnatVa", "-gnatwa", "-g", "-O2",
+         "-gnata", "-gnato", "-fstack-check",
+         "-gnat12", "-gnatwe", "-gnatyg",
+         "-gnaty-d");
    end Compiler;
 
    package Binder is
