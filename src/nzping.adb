@@ -12,14 +12,14 @@ procedure Nzping is
    package Unbounded renames Ada.Strings.Unbounded;
    package Fixed renames Ada.Strings.Fixed;
 
-   procedure Print_Border_Lines (Lines_Length : in Integer) is
+   procedure Print_Border_Lines (Lines_Length : Integer) is
    begin
       for I in 1 .. Lines_Length loop
          Text_IO.Put ("-");
       end loop;
    end Print_Border_Lines;
 
-   DEFAULT_TOTAL_SCREEN_WIDTH : constant Integer := 80;
+   Default_Total_Screen_Width : constant Integer := 80;
    Total_Arguments_Count : constant Natural := Ada.Command_Line.Argument_Count;
    Recheck_Interval_Seconds   : Float;
 
@@ -42,7 +42,7 @@ begin
 
    Util.Http.Clients.Curl.Register;
 
-   Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
+   Print_Border_Lines (Default_Total_Screen_Width);
    Text_IO.New_Line;
 
    loop
@@ -82,10 +82,10 @@ begin
                   Unbounded.To_String (Status_Type) & " | Status Code: " &
                   Natural'Image (Status_Code));
             exception
-               when Error : UTIL.HTTP.CLIENTS.CONNECTION_ERROR =>
+               when Error : Util.Http.Clients.Connection_Error =>
                   Text_IO.Put_Line ("Host " & URI & " not found!");
 
-                  Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
+                  Print_Border_Lines (Default_Total_Screen_Width);
 
                   Text_IO.New_Line;
                   return;
@@ -94,7 +94,7 @@ begin
          end;
       end loop;
 
-      Print_Border_Lines (DEFAULT_TOTAL_SCREEN_WIDTH);
+      Print_Border_Lines (Default_Total_Screen_Width);
       Text_IO.New_Line;
 
       Text_IO.Put ("Checking for another");
