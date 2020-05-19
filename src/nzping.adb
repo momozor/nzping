@@ -73,10 +73,14 @@ begin
                      Status_Type := Unbounded.To_Unbounded_String ("ERROR");
                end case;
 
+               NZUtils.Print_Current_Time;
+
                Text_IO.Put_Line
                  ("URI: " & URI & " | Status Type: " &
                   Unbounded.To_String (Status_Type) & " | Status Code: " &
                   Natural'Image (Status_Code));
+
+               Text_IO.New_Line;
             exception
                when Error : Util.Http.Clients.Connection_Error =>
                   Text_IO.Put_Line ("Host " & URI & " not found!");
